@@ -1,26 +1,28 @@
 class Solution {
-public:
+    public: 
     vector<vector<int>> generateMatrix(int n) {
-        int sr = 0, sc = 0, er = n-1,ec = n-1,x=1,i;
-        vector<vector<int>> v(n,vector<int>(n));
-        while(sr<=er && sc <= ec){
-            for(i = sc; i <= ec && sr<=er; i++){
-                v[sr][i] = x++;
+        vector<vector<int>> matrix(n, vector<int>(n));
+        int col_start = 0, col_end = n - 1;
+        int row_start = 0, row_end = n - 1;
+        int element = 1;
+        while(col_start <= col_end && row_start <= row_end) {
+            for(int j = col_start; j <= col_end; j++) {
+                matrix[row_start][j] = element++;
             }
-            sr++;
-            for(i = sr; i <= er &&  sc<=ec; i++){
-                v[i][ec] = x++;
+            for(int i = row_start + 1; i <= row_end; i++) {
+                matrix[i][col_end] = element++;
             }
-            ec--;
-            for(i = ec; i >= sc &&  sr<=er; i--){
-                v[er][i] = x++;
+            for(int j = col_end - 1; j >= col_start; j--) {
+                matrix[row_end][j] = element++;
             }
-            er--;
-            for(i = er; i >= sr && sc<=ec; i--){
-                v[i][sc] = x++;
+            for(int i = row_end - 1; i > row_start; i--) {
+                matrix[i][col_start] = element++;
             }
-            sc++;
+            col_start++;
+            col_end--;
+            row_start++;
+            row_end--;
         }
-        return v;
+        return matrix;
     }
 };
