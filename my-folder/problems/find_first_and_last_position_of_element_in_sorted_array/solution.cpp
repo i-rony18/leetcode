@@ -1,40 +1,52 @@
 class Solution {
 public:
+    vector<int>ans;
+    void first_occ(vector<int>& nums, int target){
+        int ans1=-1 ;
+        int n = nums.size();
+        int start = 0;
+        int end = n-1;
+        while(start<=end){
+        int mid = end + (start - end)/2;
+            if(nums[mid]==target){
+                ans1 = mid;
+                end = mid - 1;
+            }
+            else if(nums[mid]<target){
+                start = mid+1;
+
+            }
+            else{
+                end = mid-1;
+            }
+        }
+        ans.push_back(ans1);
+    }
+
+    void last_occ(vector<int>& nums, int target){
+        int ans2=-1 ;
+        int n = nums.size();
+        int start = 0;
+        int end = n-1;
+        while(start<=end){
+        int mid = end + (start - end)/2;
+            if(nums[mid]==target){
+                ans2 = mid;
+                start = mid + 1;
+            }
+            else if(nums[mid]<target){
+                start = mid+1;
+
+            }
+            else{
+                end = mid-1;
+            }
+        }
+        ans.push_back(ans2);
+    }
     vector<int> searchRange(vector<int>& nums, int target) {
-        int start=0;
-        int end = nums.size()-1;
-        vector<int>v{-1,-1};
-
-        while(start<=end){
-            int mid=start +(end-start)/2;
-            if(target <nums[mid]){
-                end=mid-1;
-            }
-            else if(target>nums[mid]){
-                start=mid+1;
-            }
-            else{
-                v[0]=mid;
-                end=mid-1;
-            }
-        }
-        start=0;
-        end = nums.size()-1;
-        while(start<=end){
-
-            int mid=start +(end-start)/2;
-            if(target <nums[mid]){
-                end=mid-1;
-            }
-            else if(target>nums[mid]){
-                start=mid+1;
-            }
-            else{
-                v[1]=mid;
-                start=mid+1;
-            }
-        }
-
-        return v;
+        first_occ(nums,target);
+        last_occ(nums,target);
+        return ans;
     }
 };
