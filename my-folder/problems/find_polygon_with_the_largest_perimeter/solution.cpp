@@ -3,9 +3,7 @@ public:
     long long largestPerimeter(vector<int>& nums) {
         sort(nums.begin(),nums.end());
         int n=nums.size();
-        if(n == 3 and  nums[0] + nums[1] <= nums[2]){
-           return -1;
-        }
+        
         vector<long long> array(n);
         array[0] = nums[0];
         for(int i = 1; i < n ; i++){
@@ -17,6 +15,5 @@ public:
             }
         }
         return -1;
-
     }
 };
