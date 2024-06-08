@@ -1,23 +1,20 @@
 class Solution {
 public:
-int sol(int ind,int amount, vector<int>& coins,vector<vector<int>> &dp){
-       if(ind==0){
-           return (amount%coins[0]==0);
-            } 
-            
-            if( dp[ind][amount]!=-1)return dp[ind][amount];
-
-           int nottake=sol(ind-1,amount,coins,dp);
-           int take=0;
-           if(coins[ind]<=amount){
-               take=sol(ind,amount-coins[ind],coins,dp);
-           }
-          
- return dp[ind][amount]=take+nottake;
-}
+    int f(int i, int amt, vector<int>& coins, vector<vector<int>>& dp){
+        if(i>=coins.size()) return 0;
+        if(amt==0) return 1;
+        if(dp[i][amt]!=-1) return dp[i][amt];
+        int np = f(i+1,amt,coins,dp);
+        int p = 0;
+        if(amt>=coins[i]){
+             p = f(i,amt-coins[i],coins,dp);
+        }
+        return dp[i][amt] = p+np;
+    }
     int change(int amount, vector<int>& coins) {
-        int ind=coins.size();
-        vector<vector<int>> dp(ind,vector<int>(amount+1,-1));
-            return sol(ind-1,amount,coins,dp);
+        sort(coins.begin(),coins.end());
+        int n = coins.size();
+        vector<vector<int>> dp(n+1,vector<int>(amount+1,-1));
+        return f(0,amount,coins,dp);
     }
 };
